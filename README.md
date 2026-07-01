@@ -1,64 +1,56 @@
-# Proyecto PHP MVC - Registro ITECH
+# Capital Humano ITECH - Proyecto MVC PHP
 
-Proyecto completo en PHP MVC para registrar inscriptores del evento ITECH usando MariaDB/phpMyAdmin. Está ajustado a la base `parcial_itech` enviada por la profesora.
+Proyecto PHP con estructura MVC para registrar inscriptores de un evento tecnológico.
 
 ## Incluye
 
-- MVC puro en PHP.
-- PDO con consultas preparadas.
-- Sanitización y validación separadas en `app/Utils`.
-- Base de datos con claves foráneas, `ON UPDATE CASCADE` y `ON DELETE RESTRICT` donde corresponde.
-- Tabla intermedia `inscriptor_temas` para la relación muchos a muchos.
-- Usuario de base de datos `itech_app` con permisos mínimos.
-- Reporte con verificación de integridad por OpenSSL.
-- Exportación a Excel con PhpSpreadsheet si está instalado, y respaldo `.xls` si Composer no está disponible.
+- Formulario con Identidad, nombre, apellido, edad, sexo, país de residencia, nacionalidad, correo, celular, temas tecnológicos y observaciones.
+- Base de datos `parcial_itech` compatible con phpMyAdmin / MariaDB.
+- Restricciones de integridad referencial con `ON UPDATE CASCADE` y `ON DELETE RESTRICT` donde corresponde.
+- Usuario de base de datos `itech_app` con permisos mínimos para la aplicación.
+- Validación y sanitización centralizadas.
+- Firma digital con OpenSSL.
+- Reporte web.
+- Exportación a Excel compatible y soporte para PhpSpreadsheet si se instala con Composer.
 
-## Instalación rápida
+## Instalación
 
 1. Copia la carpeta del proyecto dentro de `htdocs`.
 2. Importa en phpMyAdmin el archivo:
 
-   `database/parcial_itech.sql`
-
-3. Abre:
-
-   `http://localhost/capital_humano_itech_funcional/public/`
-
-## Conexión de base de datos
-
-El archivo `app/Config/Database.php` está configurado así:
-
-```php
-private const HOST = 'localhost';
-private const DB_NAME = 'parcial_itech';
-private const USER = 'itech_app';
-private const PASSWORD = 'ItechApp2026*';
+```txt
+database/parcial_itech.sql
 ```
 
-Ese usuario se crea al importar el SQL.
+3. Verifica que MariaDB esté activo.
+4. Abre:
 
-## Composer / Excel
+```txt
+http://localhost/capital_humano_itech_funcional/public/
+```
 
-Para usar Excel real `.xlsx`, ejecuta desde la raíz del proyecto:
+## Usuario de base de datos
+
+El SQL crea este usuario:
+
+```txt
+Usuario: itech_app
+Clave: ItechApp2026*
+Base: parcial_itech
+```
+
+La conexión está configurada en:
+
+```txt
+app/Config/Database.php
+```
+
+## Excel con Composer
+
+Si Composer funciona en tu equipo, puedes instalar PhpSpreadsheet así:
 
 ```bash
 composer require phpoffice/phpspreadsheet
 ```
 
-Si Composer no está instalado o falla, el botón de Excel sigue funcionando con exportación compatible `.xls`.
-
-## Estructura usada por la base
-
-- `paises(id, nombre)`
-- `areas_interes(id, nombre)`
-- `inscriptores(id, nombre, apellido, edad, sexo, pais_residencia_id, nacionalidad_id, correo, celular, observaciones, fecha_registro)`
-- `inscriptor_temas(id, inscriptor_id, area_interes_id)`
-- `firmas_digitales(id, inscriptor_id, firma_digital, algoritmo, fecha_firma)`
-
-## Nota sobre OpenSSL
-
-En XAMPP se busca automáticamente:
-
-`C:/xampp/apache/conf/openssl.cnf`
-
-Si en tu instalación está en otra ruta, revisa `app/Services/FirmaDigitalService.php`.
+Si no lo instalas, el proyecto usa una exportación `.xls` compatible con Excel.

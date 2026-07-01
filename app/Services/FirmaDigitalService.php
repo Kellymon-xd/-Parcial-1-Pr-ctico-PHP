@@ -78,6 +78,7 @@ final class FirmaDigitalService
 
     public function crearContenidoCanonico(array $datos): string
     {
+        $identidad = mb_strtolower(trim((string) ($datos['identidad'] ?? '')), 'UTF-8');
         $nombre = mb_strtolower(trim((string) ($datos['nombre'] ?? '')), 'UTF-8');
         $apellido = mb_strtolower(trim((string) ($datos['apellido'] ?? '')), 'UTF-8');
         $edad = (string) (int) ($datos['edad'] ?? 0);
@@ -88,6 +89,7 @@ final class FirmaDigitalService
         $celular = preg_replace('/\s+/', '', trim((string) ($datos['celular'] ?? ''))) ?? '';
 
         return implode('|', [
+            $identidad,
             $nombre,
             $apellido,
             $edad,

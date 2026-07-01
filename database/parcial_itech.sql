@@ -1,8 +1,5 @@
 -- =========================================================
 -- Base de datos: parcial_itech
--- Proyecto: Registro de inscriptores ITECH
--- Motor: MariaDB
--- phpMyAdmin / XAMPP
 -- =========================================================
 
 SET NAMES utf8mb4;
@@ -64,6 +61,7 @@ INSERT INTO areas_interes (nombre) VALUES
 -- =========================================================
 CREATE TABLE inscriptores (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    identidad VARCHAR(20) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     edad INT NOT NULL,
@@ -75,6 +73,7 @@ CREATE TABLE inscriptores (
     observaciones TEXT NULL,
     fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
+    CONSTRAINT uk_inscriptores_identidad UNIQUE (identidad),
     CONSTRAINT uk_inscriptores_correo UNIQUE (correo),
     CONSTRAINT chk_inscriptores_edad CHECK (edad BETWEEN 1 AND 120),
 
@@ -90,6 +89,7 @@ CREATE TABLE inscriptores (
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
+    INDEX idx_inscriptores_identidad (identidad),
     INDEX idx_inscriptores_pais_residencia (pais_residencia_id),
     INDEX idx_inscriptores_nacionalidad (nacionalidad_id),
     INDEX idx_inscriptores_fecha_registro (fecha_registro)
@@ -143,8 +143,13 @@ CREATE TABLE firmas_digitales (
     INDEX idx_firmas_digitales_fecha (fecha_firma)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+-- =========================================================
+-- Usuario exclusivo de la aplicación
+-- =========================================================
 CREATE USER IF NOT EXISTS 'itech_app'@'localhost'
+IDENTIFIED BY 'ItechApp2026*';
+
+ALTER USER 'itech_app'@'localhost'
 IDENTIFIED BY 'ItechApp2026*';
 
 GRANT SELECT ON parcial_itech.paises

@@ -43,11 +43,11 @@ final class ExcelExportService
             $fila++;
         }
 
-        foreach (range('A', 'M') as $columna) {
+        foreach (range('A', 'N') as $columna) {
             $hoja->getColumnDimension($columna)->setAutoSize(true);
         }
 
-        $hoja->getStyle('A1:M1')->getFont()->setBold(true);
+        $hoja->getStyle('A1:N1')->getFont()->setBold(true);
         $hoja->freezePane('A2');
 
         $nombreArchivo = 'inscripciones_itech_' . date('Ymd_His') . '.xlsx';
@@ -96,6 +96,7 @@ final class ExcelExportService
     {
         return [
             'ID',
+            'Identidad',
             'Nombre',
             'Apellido',
             'Edad',
@@ -115,6 +116,7 @@ final class ExcelExportService
     {
         return [
             $registro['id'] ?? '',
+            $registro['identidad'] ?? '',
             $registro['nombre'] ?? '',
             $registro['apellido'] ?? '',
             $registro['edad'] ?? '',

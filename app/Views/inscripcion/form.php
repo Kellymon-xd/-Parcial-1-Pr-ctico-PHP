@@ -40,6 +40,13 @@ $oldAreas = is_array($oldAreas) ? array_map('intval', $oldAreas) : [];
         <input type="hidden" name="csrf_token" value="<?= Sanitizador::html(csrf_token()) ?>">
 
         <div class="field">
+            <label for="identidad">Identidad <span>*</span></label>
+            <input type="text" id="identidad" name="identidad" maxlength="20" required
+                   value="<?= Sanitizador::html(old_value($old, 'identidad')) ?>"
+                   placeholder="Ejemplo: 8-123-456">
+        </div>
+
+        <div class="field">
             <label for="nombre">Nombre <span>*</span></label>
             <input type="text" id="nombre" name="nombre" maxlength="100" required
                    value="<?= Sanitizador::html(old_value($old, 'nombre')) ?>"

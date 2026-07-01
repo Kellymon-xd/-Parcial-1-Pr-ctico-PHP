@@ -44,6 +44,7 @@ final class InscripcionController
         }
 
         $datos = [
+            'identidad' => Sanitizador::texto($_POST['identidad'] ?? ''),
             'nombre' => Sanitizador::titulo($_POST['nombre'] ?? ''),
             'apellido' => Sanitizador::titulo($_POST['apellido'] ?? ''),
             'edad' => Sanitizador::texto($_POST['edad'] ?? ''),
@@ -78,7 +79,7 @@ final class InscripcionController
             $mensaje = 'No se pudo guardar el registro.';
 
             if (strpos($exception->getMessage(), 'Duplicate') !== false || strpos($exception->getMessage(), '23000') !== false) {
-                $mensaje = 'El correo ya está registrado.';
+                $mensaje = 'La identidad o el correo ya están registrados.';
             }
 
             $old = $datos;
@@ -91,6 +92,10 @@ final class InscripcionController
     private function validar(array $datos, array $areas): array
     {
         $errores = [];
+
+        if (!Validador::identidad($datos['identidad'])) {
+            $errores[] = 'La identidad debe tener entre 4 y 20 caracteres. Solo puede usar letras, números y guiones.';
+        }
 
         if (!Validador::nombre($datos['nombre'])) {
             $errores[] = 'El nombre debe tener al menos 2 caracteres y solo debe contener letras.';

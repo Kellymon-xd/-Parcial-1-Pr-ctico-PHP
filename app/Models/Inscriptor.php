@@ -20,12 +20,13 @@ final class Inscriptor
             $pdo->beginTransaction();
 
             $sql = 'INSERT INTO inscriptores
-                    (nombre, apellido, edad, sexo, pais_residencia_id, nacionalidad_id, correo, celular, observaciones)
+                    (identidad, nombre, apellido, edad, sexo, pais_residencia_id, nacionalidad_id, correo, celular, observaciones)
                     VALUES
-                    (:nombre, :apellido, :edad, :sexo, :pais_residencia_id, :nacionalidad_id, :correo, :celular, :observaciones)';
+                    (:identidad, :nombre, :apellido, :edad, :sexo, :pais_residencia_id, :nacionalidad_id, :correo, :celular, :observaciones)';
 
             $statement = $pdo->prepare($sql);
             $statement->execute([
+                'identidad' => $datos['identidad'],
                 'nombre' => $datos['nombre'],
                 'apellido' => $datos['apellido'],
                 'edad' => $datos['edad'],
@@ -85,6 +86,7 @@ final class Inscriptor
     {
         $sql = "SELECT
                     i.id,
+                    i.identidad,
                     i.nombre,
                     i.apellido,
                     i.edad,
@@ -114,6 +116,7 @@ final class Inscriptor
                     ON ai.id = it.area_interes_id
                 GROUP BY
                     i.id,
+                    i.identidad,
                     i.nombre,
                     i.apellido,
                     i.edad,
