@@ -12,14 +12,17 @@ use Itech\Utils\Sanitizador;
 <body>
 <header class="site-header">
     <div class="brand">
-        <div class="brand-logo">IT</div>
-        <div>
-            <p class="eyebrow">Universidad Tecnológica de Panamá</p>
+        <div class="brand-logo">
+            <span>IT</span>
+        </div>
+        <div class="brand-copy">
+            <p class="eyebrow">Registro académico digital</p>
             <h1><?= Sanitizador::html($tituloPagina ?? 'Formulario ITECH') ?></h1>
-            <p class="subtitle">Departamento de Ingeniería de Software</p>
+            <p class="subtitle">Evento ITECH · Inscripción, auditoría y exportación</p>
         </div>
     </div>
-    <nav class="nav-actions">
+
+    <nav class="nav-actions" aria-label="Navegación principal">
         <a href="index.php">Formulario</a>
         <a href="reporte.php">Reporte</a>
     </nav>
